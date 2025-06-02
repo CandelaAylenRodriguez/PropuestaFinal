@@ -9,8 +9,8 @@ public class SpawnerObstaculos : MonoBehaviour
     public GameObject obstaculoModoDificil;
 
     private float tiempoJugado = 0f;
-    public float distanciaEntreObstaculos = 15f;
-    private float siguienteX = 20f;
+    public float distanciaEntreObstaculos = 10f;
+    private float siguienteX = 15f;
 
     private bool modoDificil = false;
     private bool esEscenaNormal = false;
@@ -20,6 +20,8 @@ public class SpawnerObstaculos : MonoBehaviour
         string escena = SceneManager.GetActiveScene().name;
         modoDificil = (escena == "nivelDificil");
         esEscenaNormal = (escena == "nivelNormal");
+
+        SpawnObstaculo();
     }
 
     void Update()
@@ -73,7 +75,7 @@ public class SpawnerObstaculos : MonoBehaviour
 
         GameObject prefabElegido;
 
-        if (tiempoJugado < 30f)
+        if (tiempoJugado < 15f)
         {
             prefabElegido = obstaculoSaltar;
         }

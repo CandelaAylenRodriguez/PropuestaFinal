@@ -470,6 +470,7 @@ MonoBehaviour:
   distanciaEntreObstaculos: 0
   modoDificil: 0
   esEscenaNormal: 0
+  prefabMoneda: {fileID: 2604137489755479954, guid: 975126823e486e842a79d13feeb3fdf1, type: 3}
 --- !u!4 &1161680884
 Transform:
   m_ObjectHideFlags: 0
@@ -532,7 +533,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4f5f3a80a2214a24cbab07be027b9c01, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  fuerzaSalto: 14
+  fuerzaSalto: 20
   velocidadConstanteNormal: 5
   duracionDeslizamientoNormal: 0.5
   velocidadConstanteDificil: 8
@@ -589,7 +590,7 @@ Rigidbody2D:
   m_Mass: 1
   m_LinearDamping: 0
   m_AngularDamping: 0.05
-  m_GravityScale: 3
+  m_GravityScale: 7
   m_Material: {fileID: 0}
   m_IncludeLayers:
     serializedVersion: 2
@@ -599,7 +600,7 @@ Rigidbody2D:
     m_Bits: 0
   m_Interpolate: 0
   m_SleepingMode: 1
-  m_CollisionDetection: 0
+  m_CollisionDetection: 1
   m_Constraints: 4
 --- !u!212 &1228852865
 SpriteRenderer:
@@ -944,6 +945,10 @@ PrefabInstance:
     - target: {fileID: 4841930854149757285, guid: eaeeac2d1182f0343b5510d7668177ec, type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 8099903918063930235, guid: eaeeac2d1182f0343b5510d7668177ec, type: 3}
+      propertyPath: m_TagString
+      value: TextoPuntaje
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []

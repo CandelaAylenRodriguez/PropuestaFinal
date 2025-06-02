@@ -1,4 +1,5 @@
 using System.Collections;
+using TMPro;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 
@@ -6,6 +7,8 @@ public class GameManager : MonoBehaviour
 {
     public static GameManager Instance;
     public GameObject gameOverPanel;
+    public TextMeshProUGUI contadorMonedasText;
+    public int contadorMonedas = 0;
 
     private void Awake()
     {
@@ -35,6 +38,40 @@ public class GameManager : MonoBehaviour
     {
         // Espera un frame para que todos los objetos se carguen antes de buscar el panel
         StartCoroutine(AsignarGameOverPanel());
+
+        if (contadorMonedasText == null)
+        {
+            GameObject obj = GameObject.FindWithTag("TextoPuntaje");
+            if (obj != null)
+            {
+                contadorMonedasText = obj.GetComponent<TextMeshProUGUI>();
+            }
+        }
+
+        ActualizarTexto();
+    }
+    public void SumarPuntaje(int cantidad)
+    {
+        contadorMonedas += cantidad;
+        ActualizarTexto();
+    }
+
+    public void ActualizarTexto()
+    {
+        if (contadorMonedasText != null)
+        {
+            contadorMonedasText.text = "Puntaje: " + contadorMonedas.ToString();
+        }
+        else
+        {
+            Debug.LogWarning("No se encontró el texto de puntaje en esta escena.");
+        }
+    }
+
+    public void ReiniciarPuntaje()
+    {
+        contadorMonedas = 0;
+        ActualizarTexto();
     }
 
     private IEnumerator AsignarGameOverPanel()

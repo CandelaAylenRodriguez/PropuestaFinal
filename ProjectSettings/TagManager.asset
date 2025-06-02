@@ -6,6 +6,8 @@ TagManager:
   tags:
   - Suelo
   - NivelDificilTrigger
+  - SpawnerObstaculos
+  - GameOverPanel
   layers:
   - Default
   - TransparentFX

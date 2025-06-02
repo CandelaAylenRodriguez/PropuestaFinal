@@ -32,6 +32,7 @@ public class Jugador : MonoBehaviour
 
     void Start()
     {
+        Time.timeScale = 1f;
         rb = GetComponent<Rigidbody2D>();
         capsuleCollider = GetComponent<CapsuleCollider2D>();
         colliderOriginalSize = capsuleCollider.size;

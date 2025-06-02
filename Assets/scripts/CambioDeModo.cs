@@ -7,7 +7,8 @@ public class CambioDeModo : MonoBehaviour
     {
         if (collision.CompareTag("NivelDificilTrigger"))
         {
-            SceneManager.LoadScene("nivelDificil");
+            //SceneManager.LoadScene("nivelDificil");
+            GameManager.Instance.CambiarEscena("nivelDificil");
         }
     }
 }

@@ -9,6 +9,7 @@ TagManager:
   - SpawnerObstaculos
   - GameOverPanel
   - TextoPuntaje
+  - Obstaculo
   layers:
   - Default
   - TransparentFX

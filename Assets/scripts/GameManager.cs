@@ -1,143 +1,227 @@
-using System.Collections;
-using TMPro;
 using UnityEngine;
-using UnityEngine.SceneManagement;
+using System.Collections;
 
 public class GameManager : MonoBehaviour
 {
-    public static GameManager Instance;
-    public GameObject gameOverPanel;
-    public TextMeshProUGUI contadorMonedasText;
-    public int contadorMonedas = 0;
+    //private Transform jugadorTransform;
+    //public GameObject[] piezasRompecabezas; 
+    //public GameObject recolectablePrefab;   
+    //public Vector2 areaMin;                
+    //public Vector2 areaMax;                 
 
-    private void Awake()
+    //private int piezasDesbloqueadas = 0;
+    //private GameObject recolectableActual;
+    //public SpawnerObstaculos spawnerObstaculos;
+
+    //private void Start()
+    //{
+    //    piezasDesbloqueadas = GameProgress.piezasDesbloqueadas;
+
+    //    // Desactivar/activar piezas según progreso guardado
+    //    for (int i = 0; i < piezasRompecabezas.Length; i++)
+    //    {
+    //        piezasRompecabezas[i].SetActive(i < piezasDesbloqueadas);
+    //    }
+
+    //    GameObject jugador = GameObject.FindGameObjectWithTag("Player");
+    //    if (jugador != null)
+    //    {
+    //        jugadorTransform = jugador.transform;
+    //    }
+    //    else
+    //    {
+    //        Debug.LogError("No se encontró el objeto con tag 'Player'!");
+    //    }
+
+    //    // Iniciamos la rutina para generar recolectables
+    //    StartCoroutine(GenerarRecolectableCada10Segundos());
+    //}
+
+    //private IEnumerator GenerarRecolectableCada10Segundos()
+    //{
+    //    while (true)
+    //    {
+    //        // Esperamos 10 segundos
+    //        yield return new WaitForSeconds(10f);
+
+    //        // Si ya hay un recolectable en la escena, no generamos otro
+    //        if (recolectableActual == null)
+    //        {
+    //            GenerarRecolectable();
+    //        }
+    //    }
+    //}
+
+    //private void GenerarRecolectable()
+    //{
+    //    if (jugadorTransform == null) return;
+
+    //    float posXRecolectable;
+
+    //    // Asegurarse que haya al menos 2 obstáculos spawneados
+    //    if (spawnerObstaculos == null || spawnerObstaculos.posicionesObstaculosX.Count >= 2)
+    //    {
+    //        float x1 = spawnerObstaculos.posicionesObstaculosX[spawnerObstaculos.posicionesObstaculosX.Count - 2];
+    //        float x2 = spawnerObstaculos.posicionesObstaculosX[spawnerObstaculos.posicionesObstaculosX.Count - 1];
+
+    //        posXRecolectable = (x1 + x2) / 2f;
+    //    }
+    //    else
+    //    {
+    //        // Si no hay 2 obstáculos, lo ponemos un poco delante del jugador
+    //        posXRecolectable = jugadorTransform.position.x + 10f;
+    //    }
+
+    //    // Y aleatorio como siempre
+    //    float posYRecolectable = Random.Range(3.0f, 5.5f);
+
+    //    Vector2 posicionRecolectable = new Vector2(posXRecolectable, posYRecolectable);
+
+    //    recolectableActual = Instantiate(recolectablePrefab, posicionRecolectable, Quaternion.identity);
+    //}
+
+    //public void RecolectableRecogido()
+    //{
+    //    // Destruimos el recolectable actual
+    //    if (recolectableActual != null)
+    //    {
+    //        Destroy(recolectableActual);
+    //        recolectableActual = null;
+    //    }
+
+    //    // Activamos la siguiente pieza del rompecabezas si quedan piezas por activar
+    //    if (piezasDesbloqueadas < piezasRompecabezas.Length)
+    //    {
+    //        piezasRompecabezas[piezasDesbloqueadas].SetActive(true);
+    //        piezasDesbloqueadas++;
+
+    //        // Guardamos progreso global
+    //        GameProgress.piezasDesbloqueadas = piezasDesbloqueadas;
+    //    }
+    //}
+
+    private Transform jugadorTransform;
+    public GameObject[] piezasRompecabezas;
+    public GameObject recolectablePrefab;
+    public Vector2 areaMin;
+    public Vector2 areaMax;
+    private int piezasDesbloqueadas = 0;
+    private GameObject recolectableActual;
+    public SpawnerObstaculos spawnerObstaculos;
+
+    [Header("Configuración de Recolectables")]
+    public float distanciaAdelanteJugador = 20f; // Distancia mínima adelante del jugador
+    public float rangoDistanciaExtra = 10f;      // Rango adicional aleatorio
+
+    private void Start()
     {
-        if (Instance == null)
+        piezasDesbloqueadas = GameProgress.piezasDesbloqueadas;
+        // Desactivar/activar piezas según progreso guardado
+        for (int i = 0; i < piezasRompecabezas.Length; i++)
         {
-            Instance = this;
-            DontDestroyOnLoad(gameObject);
+            piezasRompecabezas[i].SetActive(i < piezasDesbloqueadas);
+        }
+
+        GameObject jugador = GameObject.FindGameObjectWithTag("Player");
+        if (jugador != null)
+        {
+            jugadorTransform = jugador.transform;
         }
         else
         {
-            Destroy(gameObject);
-            return;
+            Debug.LogError("No se encontró el objeto con tag 'Player'!");
         }
+
+        // Iniciamos la rutina para generar recolectables
+        StartCoroutine(GenerarRecolectableCada10Segundos());
     }
 
-    private void OnEnable()
+    private IEnumerator GenerarRecolectableCada10Segundos()
     {
-        SceneManager.sceneLoaded += OnSceneLoaded;
-    }
-
-    private void OnDisable()
-    {
-        SceneManager.sceneLoaded -= OnSceneLoaded;
-    }
-
-    private void OnSceneLoaded(Scene scene, LoadSceneMode mode)
-    {
-        // Espera un frame para que todos los objetos se carguen antes de buscar el panel
-        StartCoroutine(AsignarGameOverPanel());
-
-        if (contadorMonedasText == null)
+        while (true)
         {
-            GameObject obj = GameObject.FindWithTag("TextoPuntaje");
-            if (obj != null)
+            // Esperamos 10 segundos
+            yield return new WaitForSeconds(10f);
+            // Si ya hay un recolectable en la escena, no generamos otro
+            if (recolectableActual == null)
             {
-                contadorMonedasText = obj.GetComponent<TextMeshProUGUI>();
+                GenerarRecolectable();
             }
         }
-
-        ActualizarTexto();
-    }
-    public void SumarPuntaje(int cantidad)
-    {
-        contadorMonedas += cantidad;
-        ActualizarTexto();
     }
 
-    public void ActualizarTexto()
+    private void GenerarRecolectable()
     {
-        if (contadorMonedasText != null)
+        if (jugadorTransform == null) return;
+
+        float posXRecolectable;
+
+        // CORREGIDO: Calcular posición siempre adelante del jugador
+        float posicionBaseJugador = jugadorTransform.position.x;
+        float distanciaMinima = posicionBaseJugador + distanciaAdelanteJugador;
+
+        // Buscar obstáculos que estén adelante del jugador
+        if (spawnerObstaculos != null && spawnerObstaculos.posicionesObstaculosX.Count >= 2)
         {
-            contadorMonedasText.text = "Puntaje: " + contadorMonedas.ToString();
+            // Filtrar obstáculos que estén adelante del punto mínimo
+            System.Collections.Generic.List<float> obstaculosAdelante = new System.Collections.Generic.List<float>();
+
+            foreach (float posObstaculo in spawnerObstaculos.posicionesObstaculosX)
+            {
+                if (posObstaculo > distanciaMinima)
+                {
+                    obstaculosAdelante.Add(posObstaculo);
+                }
+            }
+
+            // Si tenemos al menos 2 obstáculos adelante, colocar entre ellos
+            if (obstaculosAdelante.Count >= 2)
+            {
+                // Tomar los dos primeros obstáculos adelante del jugador
+                float x1 = obstaculosAdelante[0];
+                float x2 = obstaculosAdelante[1];
+                posXRecolectable = (x1 + x2) / 2f;
+            }
+            else
+            {
+                // Si no hay suficientes obstáculos adelante, usar distancia fija + aleatoria
+                posXRecolectable = distanciaMinima + Random.Range(0f, rangoDistanciaExtra);
+            }
         }
         else
         {
-            Debug.LogWarning("No se encontró el texto de puntaje en esta escena.");
+            // Si no hay obstáculos o spawner, usar distancia fija + aleatoria
+            posXRecolectable = distanciaMinima + Random.Range(0f, rangoDistanciaExtra);
         }
+
+        // Y aleatoria como siempre
+        float posYRecolectable = Random.Range(3.0f, 5.5f);
+        Vector2 posicionRecolectable = new Vector2(posXRecolectable, posYRecolectable);
+
+        recolectableActual = Instantiate(recolectablePrefab, posicionRecolectable, Quaternion.identity);
+
+        // DEBUG: Mostrar info en consola
+        Debug.Log($"Recolectable generado en X: {posXRecolectable:F1} (Jugador en X: {posicionBaseJugador:F1})");
     }
 
-    public void ReiniciarPuntaje()
+    public void RecolectableRecogido()
     {
-        contadorMonedas = 0;
-        ActualizarTexto();
-    }
-
-    private IEnumerator AsignarGameOverPanel()
-    {
-        yield return null; // espera 1 frame
-
-        GameObject panel = GameObject.Find("GameOver");
-
-        if (panel != null)
+        // Destruimos el recolectable actual
+        if (recolectableActual != null)
         {
-            gameOverPanel = panel;
-            gameOverPanel.SetActive(false);
-            Debug.Log("gameOverPanel asignado correctamente.");
+            Destroy(recolectableActual);
+            recolectableActual = null;
         }
-        else
+
+        // Activamos la siguiente pieza del rompecabezas si quedan piezas por activar
+        if (piezasDesbloqueadas < piezasRompecabezas.Length)
         {
-            Debug.LogWarning("no se encontró GameOverPanel en la escena actual.");
+            piezasRompecabezas[piezasDesbloqueadas].SetActive(true);
+            piezasDesbloqueadas++;
+            // Guardamos progreso global
+            GameProgress.piezasDesbloqueadas = piezasDesbloqueadas;
+
+            Debug.Log($"Pieza desbloqueada! Total: {piezasDesbloqueadas}/{piezasRompecabezas.Length}");
         }
-    }
-
-    public void GameOver()
-    {
-        if (gameOverPanel != null)
-        {
-            gameOverPanel.SetActive(true);
-            Time.timeScale = 0f;
-        }
-        else
-        {
-            Debug.LogWarning("GameOverPanel no está asignado en GameManager.");
-        }
-    }
-
-    public void RetryLevel()
-    {
-        Time.timeScale = 1f;
-        SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex);
-    }
-
-    public void CambiarEscena(string nombreEscena)
-    {
-        Time.timeScale = 1f;
-        StartCoroutine(CargarEscenaConPanel(nombreEscena));
-    }
-
-    private IEnumerator CargarEscenaConPanel(string nombreEscena)
-    {
-        yield return SceneManager.LoadSceneAsync(nombreEscena);
-        yield return null; // espera a que todo en la nueva escena esté activo
-
-        GameObject panel = GameObject.Find("GameOver");
-        if (panel != null)
-        {
-            gameOverPanel = panel;
-            gameOverPanel.SetActive(false);
-            Debug.Log("panel asignado tras cambio de escena.");
-        }
-        else
-        {
-            Debug.LogWarning("gameOverPanel no encontrado tras cambio de escena.");
-        }
-    }
-
-    public void SetGameOverPanel(GameObject panel)
-    {
-        gameOverPanel = panel;
-        gameOverPanel.SetActive(false);
     }
 }

@@ -1,24 +1,63 @@
 using UnityEngine;
 using UnityEngine.SceneManagement;
+using System.Collections;
 
 public class MenuPrincipal : MonoBehaviour
 {
-    // Método para comenzar el juego (cargar la escena del juego)
+    [Header("Configuración")]
+    public float delayBoton = 0.5f;
+
+    void Start()
+    {
+        // Asegurar que no haya música en el menú
+        if (AudioManager.Instance != null)
+        {
+            AudioManager.Instance.DetenerMusica();
+            Debug.Log("Música detenida en el menú principal");
+        }
+
+        // DEBUG: Verificar AudioManager
+        if (AudioManager.Instance != null)
+        {
+            Debug.Log("AudioManager encontrado en MenuPrincipal");
+
+            if (AudioManager.Instance.sonidoBtn != null)
+            {
+                Debug.Log("Sonido de botón está asignado");
+            }
+            else
+            {
+                Debug.LogWarning("Sonido de botón NO está asignado!");
+            }
+        }
+        else
+        {
+            Debug.LogError("AudioManager NO encontrado en MenuPrincipal!");
+        }
+    }
     public void ComenzarJuego()
     {
-        // Cargar la escena de nivel normal o como lo hayas llamado
-        SceneManager.LoadScene("nivelNormal"); // Cambia "nivelNormal" por el nombre de tu escena de juego
+        // Iniciar corrutina para reproducir sonido y luego cambiar escena
+        StartCoroutine(ComenzarJuegoConSonido());
     }
 
-    // Método para salir del juego
-    public void SalirJuego()
+    private IEnumerator ComenzarJuegoConSonido()
     {
-        // Si estamos en el editor de Unity, se detendrá la ejecución
-        #if UNITY_EDITOR
-                UnityEditor.EditorApplication.isPlaying = false;
-        #else
-                    // Si estamos en una compilación, cerramos la aplicación
-                    Application.Quit();
-        #endif
+        // REPRODUCIR SONIDO DE BOTÓN
+        if (AudioManager.Instance != null)
+        {
+            AudioManager.Instance.ReproducirSonidoBtn();
+            Debug.Log("Sonido de botón iniciado");
+        }
+        else
+        {
+            Debug.LogError("AudioManager.Instance es null!");
+        }
+
+        // Esperar que termine el sonido
+        yield return new WaitForSeconds(delayBoton);
+
+        // Cargar la escena
+        SceneManager.LoadScene("Tutorial");
     }
 }

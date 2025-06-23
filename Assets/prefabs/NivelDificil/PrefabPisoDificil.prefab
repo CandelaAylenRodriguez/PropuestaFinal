@@ -11,7 +11,7 @@ GameObject:
   - component: {fileID: 6787639820290652814}
   - component: {fileID: 4793221458629190272}
   - component: {fileID: 2987053915761296927}
-  m_Layer: 0
+  m_Layer: 3
   m_Name: PrefabPisoDificil
   m_TagString: Suelo
   m_Icon: {fileID: 0}
@@ -125,8 +125,8 @@ BoxCollider2D:
   m_Offset: {x: 0, y: -0.7}
   m_SpriteTilingProperty:
     border: {x: 0, y: 0, z: 0, w: 0}
-    pivot: {x: 0.5, y: 0.5}
-    oldSize: {x: 25.6, y: 3.16}
+    pivot: {x: 0.5, y: 0}
+    oldSize: {x: 25.6, y: 7.2}
     newSize: {x: 25.6, y: 3.16}
     adaptiveTilingThreshold: 0.5
     drawMode: 0

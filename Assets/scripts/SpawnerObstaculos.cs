@@ -4,218 +4,21 @@ using UnityEngine.SceneManagement;
 
 public class SpawnerObstaculos : MonoBehaviour
 {
-    //[Header("Referencias")]
-    //public Transform jugador;
-    //public GameObject obstaculoSaltar;      // Prefab base para saltar
-    //public GameObject obstaculoDeslizar;    // Prefab base para deslizar
-
-    //[Header("Sprites para Obstáculos de Saltar")]
-    //public Sprite[] spritesSaltar = new Sprite[3];  // Array para 3 sprites de saltar
-
-    //[Header("Sprites para Obstáculos de Deslizar")]
-    //public Sprite[] spritesDeslizar = new Sprite[2]; // Array para 2 sprites de deslizar
-
-    //[Header("Configuración")]
-    //public float distanciaEntreObstaculos = 10f;
-    //public bool modoDificil = false;
-    //public bool esEscenaNormal = false;
-
-    //private float tiempoJugado = 0f;
-    //private float siguienteX = 15f;
-    //private int ultimoSpriteSaltar = -1;    // Para evitar repetir sprites consecutivos
-    //private int ultimoSpriteDeslizar = -1;  // Para evitar repetir sprites consecutivos
-    //public List<float> posicionesObstaculosX = new List<float>();
-
-    //void Start()
-    //{
-    //    string escena = SceneManager.GetActiveScene().name;
-    //    modoDificil = (escena == "nivelDificil");
-    //    esEscenaNormal = (escena == "nivelNormal");
-
-    //    // Verificar que tenemos sprites asignados
-    //    VerificarSprites();
-
-    //    SpawnObstaculo(); // Spawn initial obstacle
-    //}
-
-    //void VerificarSprites()
-    //{
-    //    bool hayError = false;
-
-    //    if (spritesSaltar.Length == 0 || SonTodosNull(spritesSaltar))
-    //    {
-    //        Debug.LogWarning("No hay sprites asignados para obstáculos de saltar!");
-    //        hayError = true;
-    //    }
-
-    //    if (spritesDeslizar.Length == 0 || SonTodosNull(spritesDeslizar))
-    //    {
-    //        Debug.LogWarning("No hay sprites asignados para obstáculos de deslizar!");
-    //        hayError = true;
-    //    }
-
-    //    if (hayError)
-    //    {
-    //        Debug.LogWarning("Asigna los sprites en el inspector para ver la variación visual.");
-    //    }
-    //}
-
-    //bool SonTodosNull(Sprite[] sprites)
-    //{
-    //    foreach (Sprite sprite in sprites)
-    //    {
-    //        if (sprite != null) return false;
-    //    }
-    //    return true;
-    //}
-
-    //void Update()
-    //{
-    //    tiempoJugado += Time.deltaTime;
-    //    ActualizarDificultad();
-
-    //    if (jugador.position.x >= siguienteX)
-    //    {
-    //        SpawnObstaculo();
-    //        siguienteX += distanciaEntreObstaculos;
-    //    }
-    //}
-
-    //void ActualizarDificultad()
-    //{
-    //    if (modoDificil)
-    //    {
-    //        distanciaEntreObstaculos = Mathf.Lerp(8f, 5f, Mathf.Clamp01(tiempoJugado / 180f));
-    //    }
-    //    else
-    //    {
-    //        if (tiempoJugado < 30f)
-    //            distanciaEntreObstaculos = 13f;
-    //        else if (tiempoJugado < 60f)
-    //            distanciaEntreObstaculos = 11f;
-    //        else if (tiempoJugado < 90f)
-    //            distanciaEntreObstaculos = 9f;
-    //        else if (tiempoJugado < 120f)
-    //            distanciaEntreObstaculos = 7f;
-    //        else if (tiempoJugado < 180f)
-    //            distanciaEntreObstaculos = 6f;
-    //        else
-    //            distanciaEntreObstaculos = Random.Range(3.5f, 5f);
-    //    }
-    //}
-
-    //void SpawnObstaculo()
-    //{
-    //    GameObject prefabElegido;
-    //    bool esSaltar;
-
-    //    // Determinar tipo de obstáculo
-    //    if (tiempoJugado < 15f)
-    //    {
-    //        prefabElegido = obstaculoSaltar;
-    //        esSaltar = true;
-    //    }
-    //    else
-    //    {
-    //        esSaltar = Random.value > 0.5f;
-    //        prefabElegido = esSaltar ? obstaculoSaltar : obstaculoDeslizar;
-    //    }
-
-    //    // Determinar posición
-    //    Vector3 posicionSpawn = new Vector3(jugador.position.x + 15f, 0f, 0f);
-    //    if (esSaltar)
-    //        posicionSpawn.y = 2.8f;
-    //    else
-    //        posicionSpawn.y = 5.6f;
-
-    //    // Instanciar el obstáculo
-    //    GameObject obstaculo = Instantiate(prefabElegido, posicionSpawn, Quaternion.identity);
-
-    //    // Aplicar sprite aleatorio
-    //    AplicarSpriteAleatorio(obstaculo, esSaltar);
-
-    //    // Guardar posición
-    //    posicionesObstaculosX.Add(posicionSpawn.x);
-
-    //    // Limitar la lista a máximo 3 elementos
-    //    if (posicionesObstaculosX.Count > 3)
-    //    {
-    //        posicionesObstaculosX.RemoveAt(0);
-    //    }
-    //}
-
-    //void AplicarSpriteAleatorio(GameObject obstaculo, bool esSaltar)
-    //{
-    //    SpriteRenderer spriteRenderer = obstaculo.GetComponent<SpriteRenderer>();
-    //    if (spriteRenderer == null)
-    //    {
-    //        Debug.LogWarning($"El obstáculo {obstaculo.name} no tiene SpriteRenderer!");
-    //        return;
-    //    }
-
-    //    if (esSaltar && spritesSaltar.Length > 0)
-    //    {
-    //        // Elegir sprite para saltar (evitando repetir el último)
-    //        int indiceSprite = ElegirSpriteAleatorio(spritesSaltar.Length, ultimoSpriteSaltar);
-    //        if (spritesSaltar[indiceSprite] != null)
-    //        {
-    //            spriteRenderer.sprite = spritesSaltar[indiceSprite];
-    //            ultimoSpriteSaltar = indiceSprite;
-    //        }
-    //    }
-    //    else if (!esSaltar && spritesDeslizar.Length > 0)
-    //    {
-    //        // Elegir sprite para deslizar (evitando repetir el último)
-    //        int indiceSprite = ElegirSpriteAleatorio(spritesDeslizar.Length, ultimoSpriteDeslizar);
-    //        if (spritesDeslizar[indiceSprite] != null)
-    //        {
-    //            spriteRenderer.sprite = spritesDeslizar[indiceSprite];
-    //            ultimoSpriteDeslizar = indiceSprite;
-    //        }
-    //    }
-    //}
-
-    //int ElegirSpriteAleatorio(int totalSprites, int ultimoIndice)
-    //{
-    //    if (totalSprites <= 1) return 0;
-
-    //    int nuevoIndice;
-    //    do
-    //    {
-    //        nuevoIndice = Random.Range(0, totalSprites);
-    //    }
-    //    while (nuevoIndice == ultimoIndice && totalSprites > 1);
-
-    //    return nuevoIndice;
-    //}
-
-    //// Método para testing - cambiar sprites en runtime
-    //[ContextMenu("Test Spawn Saltar")]
-    //public void TestSpawnSaltar()
-    //{
-    //    Vector3 pos = new Vector3(jugador.position.x + 5f, 2.8f, 0f);
-    //    GameObject test = Instantiate(obstaculoSaltar, pos, Quaternion.identity);
-    //    AplicarSpriteAleatorio(test, true);
-    //}
-
-    //[ContextMenu("Test Spawn Deslizar")]
-    //public void TestSpawnDeslizar()
-    //{
-    //    Vector3 pos = new Vector3(jugador.position.x + 5f, 5.6f, 0f);
-    //    GameObject test = Instantiate(obstaculoDeslizar, pos, Quaternion.identity);
-    //    AplicarSpriteAleatorio(test, false);
-    //}
-
     [Header("Referencias")]
     public Transform jugador;
     public GameObject obstaculoSaltar;      // Prefab base para saltar
     public GameObject obstaculoDeslizar;    // Prefab base para deslizar
+    public GameObject obstaculoDeslizarDificil; // Prefab base para deslizar en modo difícil
+    public GameObject obstaculoSaltarDificil; // Prefab base para saltar en modo difícil
 
     [Header("Sprites para Obstáculos de Saltar")]
     public Sprite[] spritesSaltar = new Sprite[3];  // Array para 3 sprites de saltar
 
     [Header("Sprites para Obstáculos de Deslizar")]
     public Sprite[] spritesDeslizar = new Sprite[2]; // Array para 2 sprites de deslizar
+
+    public Vector2 tamañoColliderSaltar = new Vector2(1.2f, 1.2f);
+    public Vector2 tamañoColliderDeslizar = new Vector2(1f, 7.86f);
 
     [Header("Configuración")]
     public float distanciaEntreObstaculos = 10f;
@@ -234,6 +37,20 @@ public class SpawnerObstaculos : MonoBehaviour
         modoDificil = (escena == "nivelDificil");
         esEscenaNormal = (escena == "nivelNormal");
 
+        // Si es modo normal, restauramos tiempo
+        if (esEscenaNormal)
+        {
+            tiempoJugado = GameProgress.tiempoJugadoNormal;
+        }
+
+        ConfigurarTiempoInicialPorNivel(escena);
+
+        if (modoDificil)
+        {
+            tiempoJugado = GameProgress.tiempoJugadoNormal;
+            Debug.Log($"Nivel Difícil - Tiempo heredado del normal: {tiempoJugado} segundos");
+        }
+
         // Verificar que tenemos sprites asignados
         VerificarSprites();
 
@@ -246,19 +63,19 @@ public class SpawnerObstaculos : MonoBehaviour
 
         if (spritesSaltar.Length == 0 || SonTodosNull(spritesSaltar))
         {
-            Debug.LogWarning("No hay sprites asignados para obstáculos de saltar!");
+            //Debug.LogWarning("No hay sprites asignados para obstáculos de saltar!");
             hayError = true;
         }
 
         if (spritesDeslizar.Length == 0 || SonTodosNull(spritesDeslizar))
         {
-            Debug.LogWarning("No hay sprites asignados para obstáculos de deslizar!");
+            //Debug.LogWarning("No hay sprites asignados para obstáculos de deslizar!");
             hayError = true;
         }
 
         if (hayError)
         {
-            Debug.LogWarning("Asigna los sprites en el inspector para ver la variación visual.");
+            //Debug.LogWarning("Asigna los sprites en el inspector para ver la variación visual.");
         }
     }
 
@@ -271,6 +88,36 @@ public class SpawnerObstaculos : MonoBehaviour
         return true;
     }
 
+    void ConfigurarTiempoInicialPorNivel(string escenaActual)
+    {
+        if (modoDificil) return;
+
+        switch (escenaActual)
+        {
+            case "nivel1":
+                tiempoJugado = GameProgress.tiempoNivel1;
+                break;
+
+            case "nivel2":
+                tiempoJugado = GameProgress.tiempoNivel2;
+                break;
+
+            case "nivel3":
+                tiempoJugado = GameProgress.tiempoNivel3;
+                break;
+
+            case "nivelDificil":
+                // No hacer nada: se mantiene el tiempo actual
+                break;
+
+            default:
+                tiempoJugado = 0f;
+                break;
+        }
+
+        //Debug.Log($"[Inicio] Tiempo inicial para {escenaActual}: {tiempoJugado}");
+    }
+
     void Update()
     {
         tiempoJugado += Time.deltaTime;
@@ -281,6 +128,19 @@ public class SpawnerObstaculos : MonoBehaviour
             SpawnObstaculo();
             siguienteX += distanciaEntreObstaculos;
         }
+
+        if (esEscenaNormal)
+        {
+            GameProgress.tiempoJugadoNormal = tiempoJugado;
+        }
+
+        string escena = SceneManager.GetActiveScene().name;
+        if (escena == "nivel1") GameProgress.tiempoNivel1 = tiempoJugado;
+        if (escena == "nivel2") GameProgress.tiempoNivel2 = tiempoJugado;
+        if (escena == "nivel3") GameProgress.tiempoNivel3 = tiempoJugado;
+        if (escena == "nivelNormal") GameProgress.tiempoJugadoNormal = tiempoJugado;
+
+        Debug.Log($"[Tiempo] Escena: {escena} | Tiempo Jugado: {tiempoJugado:F1}s");
     }
 
     void ActualizarDificultad()
@@ -312,15 +172,30 @@ public class SpawnerObstaculos : MonoBehaviour
         bool esSaltar;
 
         // Determinar tipo de obstáculo
-        if (tiempoJugado < 15f)
+        if (modoDificil != true)
         {
-            prefabElegido = obstaculoSaltar;
-            esSaltar = true;
+            if (tiempoJugado < 15f)
+            {
+                prefabElegido = obstaculoSaltar;
+                esSaltar = true;
+            }
+            else
+            {
+                esSaltar = Random.value > 0.5f;
+                prefabElegido = esSaltar ? obstaculoSaltar : obstaculoDeslizar;
+            }
         }
         else
         {
             esSaltar = Random.value > 0.5f;
             prefabElegido = esSaltar ? obstaculoSaltar : obstaculoDeslizar;
+        }
+
+        // Verificar que tenemos el prefab
+        if (prefabElegido == null)
+        {
+            //Debug.LogError($"Prefab no asignado para obstáculo de {(esSaltar ? "saltar" : "deslizar")}");
+            return;
         }
 
         // Determinar posición (ajustada más abajo)
@@ -337,7 +212,7 @@ public class SpawnerObstaculos : MonoBehaviour
         obstaculo.transform.localScale = new Vector3(0.6f, 0.6f, 1f);
 
         // AÑADIR ESTA LÍNEA:
-        ConfigurarObstaculo(obstaculo);
+        ConfigurarObstaculo(obstaculo, esSaltar);
 
         // Aplicar sprite aleatorio
         AplicarSpriteAleatorio(obstaculo, esSaltar);
@@ -357,7 +232,7 @@ public class SpawnerObstaculos : MonoBehaviour
         SpriteRenderer spriteRenderer = obstaculo.GetComponent<SpriteRenderer>();
         if (spriteRenderer == null)
         {
-            Debug.LogWarning($"El obstáculo {obstaculo.name} no tiene SpriteRenderer!");
+            //Debug.LogWarning($"El obstáculo {obstaculo.name} no tiene SpriteRenderer!");
             return;
         }
 
@@ -382,6 +257,10 @@ public class SpawnerObstaculos : MonoBehaviour
             }
         }
     }
+    public float GetTiempoJugado()
+    {
+        return tiempoJugado;
+    }
 
     int ElegirSpriteAleatorio(int totalSprites, int ultimoIndice)
     {
@@ -396,7 +275,8 @@ public class SpawnerObstaculos : MonoBehaviour
 
         return nuevoIndice;
     }
-    void ConfigurarObstaculo(GameObject obstaculo)
+
+    void ConfigurarObstaculo(GameObject obstaculo, bool esSaltar)
     {
         // Asegurar que tenga el tag correcto
         if (!obstaculo.CompareTag("Obstaculo"))
@@ -415,25 +295,20 @@ public class SpawnerObstaculos : MonoBehaviour
         collider.isTrigger = false;
         collider.sharedMaterial = null;
 
-        // Ajustar tamaño del collider según el tipo de obstáculo
-        SpriteRenderer sr = obstaculo.GetComponent<SpriteRenderer>();
-        if (sr != null && sr.sprite != null)
+        // USAR TAMAÑOS FIJOS PARA CONSISTENCIA
+        if (esSaltar)
         {
-            Bounds spriteBounds = sr.sprite.bounds;
-
-            // Detectar si es obstáculo de deslizar (está más arriba en Y)
-            if (obstaculo.transform.position.y > 3f) // Los de deslizar están en Y=4f
-            {
-                // OBSTÁCULO DE DESLIZAR - Rectángulo largo
-                collider.size = new Vector2(1, spriteBounds.size.y); // 3 veces más ancho
-                collider.offset = new Vector2(0f, 0f); // Centrado
-            }
-            else
-            {
-                // OBSTÁCULO DE SALTAR - Tamaño normal
-                collider.size = new Vector2(1.2f, 1.2f);
-                collider.offset = new Vector2(0f, 0f);
-            }
+            // OBSTÁCULO DE SALTAR
+            collider.size = tamañoColliderSaltar;
+            collider.offset = new Vector2(0f, 0f);
+            //Debug.Log($"Configurando obstáculo SALTAR - Size: {collider.size}");
+        }
+        else
+        {
+            // OBSTÁCULO DE DESLIZAR - SIEMPRE el mismo tamaño
+            collider.size = tamañoColliderDeslizar;
+            collider.offset = new Vector2(0f, 0f);
+            //Debug.Log($"Configurando obstáculo DESLIZAR - Size: {collider.size}");
         }
 
         // Añadir visualizador de collider
@@ -441,27 +316,18 @@ public class SpawnerObstaculos : MonoBehaviour
         if (visualizador == null)
         {
             visualizador = obstaculo.AddComponent<VisualizadorCollider>();
-            visualizador.colorCollider = Color.red;
-            visualizador.mostrarCollider = true;
         }
-    }
 
-    // Método para testing - cambiar sprites en runtime
-    [ContextMenu("Test Spawn Saltar")]
-    public void TestSpawnSaltar()
-    {
-        Vector3 pos = new Vector3(jugador.position.x + 5f, 2.2f, 0f);  // Posición actualizada
-        GameObject test = Instantiate(obstaculoSaltar, pos, Quaternion.identity);
-        ConfigurarObstaculo(test);  // AÑADIR ESTA LÍNEA
-        AplicarSpriteAleatorio(test, true);
-    }
+        // Colores diferentes para cada tipo
+        if (esSaltar)
+        {
+            visualizador.colorCollider = Color.red; // Rojo para saltar
+        }
+        else
+        {
+            visualizador.colorCollider = Color.blue; // Azul para deslizar
+        }
 
-    [ContextMenu("Test Spawn Deslizar")]
-    public void TestSpawnDeslizar()
-    {
-        Vector3 pos = new Vector3(jugador.position.x + 5f, 4.5f, 0f);  // Posición actualizada
-        GameObject test = Instantiate(obstaculoDeslizar, pos, Quaternion.identity);
-        ConfigurarObstaculo(test);  // AÑADIR ESTA LÍNEA
-        AplicarSpriteAleatorio(test, false);
+        visualizador.mostrarCollider = true;
     }
 }

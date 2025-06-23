@@ -11,7 +11,7 @@ GameObject:
   - component: {fileID: 6024774449930664379}
   - component: {fileID: 3731370207567293037}
   - component: {fileID: 1317326705035218171}
-  m_Layer: 0
+  m_Layer: 3
   m_Name: PisoPrefab
   m_TagString: Suelo
   m_Icon: {fileID: 0}

@@ -54,6 +54,8 @@ public class GeneradorFondoParallaxInfinito : MonoBehaviour
         {
             InicializarCapa(capa);
         }
+
+        CambiarOpacidadCapa(2, 0.5f);
     }
 
     void InicializarCapa(CapaParallax capa)
@@ -105,6 +107,24 @@ public class GeneradorFondoParallaxInfinito : MonoBehaviour
         foreach (CapaParallax capa in capasParallax)
         {
             ActualizarCapa(capa);
+        }
+    }
+
+    public void CambiarOpacidadCapa(int indiceCapa, float nuevaOpacidad)
+    {
+        if (indiceCapa < 0 || indiceCapa >= capasParallax.Length) return;
+
+        CapaParallax capa = capasParallax[indiceCapa];
+
+        foreach (GameObject segmento in capa.segmentosActivos)
+        {
+            SpriteRenderer sr = segmento.GetComponent<SpriteRenderer>();
+            if (sr != null)
+            {
+                Color color = sr.color;
+                color.a = Mathf.Clamp01(nuevaOpacidad);  // Entre 0 y 1
+                sr.color = color;
+            }
         }
     }
 

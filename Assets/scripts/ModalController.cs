@@ -43,33 +43,19 @@ public class ModalController : MonoBehaviour
     {
         if (AudioManager.Instance != null)
         {
-            // Configurar slider de música
             if (sliderMusica != null)
             {
-                // Establecer valor inicial del slider según el volumen actual
+                sliderMusica.onValueChanged.RemoveAllListeners();
                 sliderMusica.value = AudioManager.Instance.volumenMusica;
-
-                // Añadir listener para cambios en tiempo real
                 sliderMusica.onValueChanged.AddListener(CambiarVolumenMusica);
-
-                Debug.Log($"Slider música configurado. Valor inicial: {sliderMusica.value}");
             }
 
-            // Configurar slider de SFX
             if (sliderSFX != null)
             {
-                // Establecer valor inicial del slider según el volumen actual
+                sliderSFX.onValueChanged.RemoveAllListeners();
                 sliderSFX.value = AudioManager.Instance.volumenEfectos;
-
-                // Añadir listener para cambios en tiempo real
                 sliderSFX.onValueChanged.AddListener(CambiarVolumenSFX);
-
-                Debug.Log($"Slider SFX configurado. Valor inicial: {sliderSFX.value}");
             }
-        }
-        else
-        {
-            Debug.LogWarning("AudioManager.Instance es null. Los sliders no se configurarán correctamente.");
         }
     }
 

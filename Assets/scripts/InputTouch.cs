@@ -1,4 +1,5 @@
 using UnityEngine;
+using UnityEngine.EventSystems;
 
 public class InputTouch : MonoBehaviour
 {
@@ -50,17 +51,38 @@ public class InputTouch : MonoBehaviour
 
     void DetectarEntrada()
     {
+        //float distancia = (finToque - inicioToque).magnitude;
+        //Vector2 direccion = finToque - inicioToque;
+
+        //if (distancia < distanciaMinSwipe)
+        //{
+        //    // Toque corto o click → salto
+        //    jugador.Saltar();
+        //}
+        //else
+        //{
+        //    // Swipe
+        //    if (Mathf.Abs(direccion.x) > Mathf.Abs(direccion.y) && direccion.x > 0)
+        //    {
+        //        jugador.Deslizarse();
+        //    }
+        //}
+
+        #if UNITY_EDITOR
+        if (EventSystem.current.IsPointerOverGameObject()) return;
+        #else
+            if (Input.touchCount > 0 && EventSystem.current.IsPointerOverGameObject(Input.GetTouch(0).fingerId)) return;
+        #endif
+
         float distancia = (finToque - inicioToque).magnitude;
         Vector2 direccion = finToque - inicioToque;
 
         if (distancia < distanciaMinSwipe)
         {
-            // Toque corto o click → salto
             jugador.Saltar();
         }
         else
         {
-            // Swipe
             if (Mathf.Abs(direccion.x) > Mathf.Abs(direccion.y) && direccion.x > 0)
             {
                 jugador.Deslizarse();

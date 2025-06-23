@@ -181,7 +181,10 @@ public class Jugador : MonoBehaviour
                 AudioManager.Instance.ReproducirSonidoSalto();
             }
 
-            GameProgress.SumarPuntaje(100);
+            if (!modoDificil)
+            {
+                GameProgress.SumarPuntaje(100);
+            }
         }
     }
 
@@ -195,7 +198,10 @@ public class Jugador : MonoBehaviour
                 AudioManager.Instance.ReproducirSonidoDeslizar();
             }
 
-            GameProgress.SumarPuntaje(150);
+            if(!modoDificil)
+            {
+                GameProgress.SumarPuntaje(150);
+            }
 
             StartCoroutine(DeslizarCoroutine());
         }

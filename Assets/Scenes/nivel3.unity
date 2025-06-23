@@ -155,61 +155,6 @@ RectTransform:
   m_AnchoredPosition: {x: 0, y: 0}
   m_SizeDelta: {x: -20, y: 0}
   m_Pivot: {x: 0.5, y: 0.5}
---- !u!1 &28175529
-GameObject:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  serializedVersion: 6
-  m_Component:
-  - component: {fileID: 28175531}
-  - component: {fileID: 28175530}
-  m_Layer: 0
-  m_Name: AudioManager
-  m_TagString: Untagged
-  m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 1
---- !u!114 &28175530
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 28175529}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 9b1be96e3b1217c43802674be9f41b25, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  musicaFondo: {fileID: 0}
-  efectosSonido: {fileID: 0}
-  musicaNormal: {fileID: 8300000, guid: 21b102a8a70d7a340934c3641ab405da, type: 3}
-  musicaDificil: {fileID: 8300000, guid: 0b6778f81f73a274ebd9b093e7472a1d, type: 3}
-  sonidoSalto: {fileID: 8300000, guid: b99869999d46be94b8c9117ec5965325, type: 3}
-  sonidoAterrizaje: {fileID: 8300000, guid: 204e4c2c994a04045b80ddefec1d5f49, type: 3}
-  sonidoDeslizar: {fileID: 8300000, guid: 75d220d10dd9b794c84c4e35f6ee8528, type: 3}
-  sonidoRecolectable: {fileID: 8300000, guid: 75b35c15fd45ce142b27a950512f41e9, type: 3}
-  sonidoBtn: {fileID: 8300000, guid: d73ff00b2ba5be0458bc8bdb59cb065d, type: 3}
-  volumenMusica: 0.7
-  volumenEfectos: 1
---- !u!4 &28175531
-Transform:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 28175529}
-  serializedVersion: 2
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 268.23743, y: 4.2501593, z: -1.2815639}
-  m_LocalScale: {x: 1, y: 1, z: 1}
-  m_ConstrainProportionsScale: 0
-  m_Children: []
-  m_Father: {fileID: 0}
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &69620334
 GameObject:
   m_ObjectHideFlags: 0
@@ -457,11 +402,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   piezasRompecabezas:
   - {fileID: 1916462096, guid: ebfaad8d7a7da8b4b901381e42956f68, type: 3}
-  - {fileID: -1051174204, guid: ebfaad8d7a7da8b4b901381e42956f68, type: 3}
-  - {fileID: 1789264933, guid: ebfaad8d7a7da8b4b901381e42956f68, type: 3}
-  - {fileID: -322255850, guid: ebfaad8d7a7da8b4b901381e42956f68, type: 3}
-  - {fileID: 389719191, guid: ebfaad8d7a7da8b4b901381e42956f68, type: 3}
-  - {fileID: -6538773, guid: ebfaad8d7a7da8b4b901381e42956f68, type: 3}
   imagenRompecabezas: {fileID: 1453683781}
   offset: {x: -8, y: 4, z: 0}
   prefabPuerta: {fileID: 1927653747116763838, guid: e9ad607757abb124ab26c9a51042037d, type: 3}
@@ -636,8 +576,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   player: {fileID: 0}
   spawnerObstaculos: {fileID: 0}
-  estaEnModoDificil: 0
   textoPuntajeGameOver: {fileID: 0}
+  duracionModoDificil: 25
 --- !u!1001 &559059547
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -656,7 +596,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 8133221690891407828, guid: e3c860ab25013b742b943722380e90a1, type: 3}
       propertyPath: m_LocalPosition.x
-      value: -8
+      value: -9.3
       objectReference: {fileID: 0}
     - target: {fileID: 8133221690891407828, guid: e3c860ab25013b742b943722380e90a1, type: 3}
       propertyPath: m_LocalPosition.y
@@ -938,7 +878,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 319, y: 241}
+  m_AnchoredPosition: {x: 300, y: 195}
   m_SizeDelta: {x: 270, y: 45}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &979450439
@@ -1614,7 +1554,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 0, y: 241.00002}
+  m_AnchoredPosition: {x: 0, y: 195}
   m_SizeDelta: {x: 150, y: 200}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1453683781
@@ -1742,7 +1682,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: -482, y: 241.00006}
+  m_AnchoredPosition: {x: -440, y: 195}
   m_SizeDelta: {x: 50, y: 45}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1696975282
@@ -1874,7 +1814,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: -320, y: 241.00006}
+  m_AnchoredPosition: {x: -270, y: 195}
   m_SizeDelta: {x: 180, y: 45}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1715685887
@@ -2061,4 +2001,3 @@ SceneRoots:
   - {fileID: 466289824}
   - {fileID: 1312092506}
   - {fileID: 69620336}
-  - {fileID: 28175531}

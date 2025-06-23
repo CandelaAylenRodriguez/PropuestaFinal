@@ -31,7 +31,7 @@ public class TemporizadorModoDificil : MonoBehaviour
 
         if (tiempoTranscurrido >= duracionModoDificil)
         {
-            SceneManager.LoadScene("nivelNormal");
+            SceneManager.LoadScene(GameProgress.escenaActual);
         }
     }
 }

@@ -21,7 +21,7 @@ public class WinnerController : MonoBehaviour
         // Pausar la música si el AudioManager está activo
         if (AudioManager.Instance != null)
         {
-            AudioManager.Instance.PausarMusica();
+            AudioManager.Instance.DetenerMusica();
         }
     }
 
